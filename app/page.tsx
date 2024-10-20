@@ -100,7 +100,7 @@ export default function Main() {
               <>
                 <DynamicWidget />
                 <div className="space-y-4">
-                  {campaigns.map((campaign) => (
+                  {campaigns.map((campaign:any) => (
                     <div key={campaign.id} className="bg-white shadow-md rounded-lg overflow-hidden">
                       <img src={campaign.image} alt={campaign.name} className="w-full h-40 object-cover" />
                       <div className="p-4">
