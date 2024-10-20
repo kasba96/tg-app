@@ -54,7 +54,7 @@ bot.start((ctx: any) => {
       inline_keyboard: [
         [
           {
-            text: "Open Mini Web App 🚀",
+            text: "Temp Wallet Log In",
             web_app: {
               url: `${LOGIN_URL}/?telegramAuthToken=${encodedTelegramAuthToken}`,
             },
@@ -65,7 +65,14 @@ bot.start((ctx: any) => {
   };
 
   // Send a welcome message with the inline keyboard
-  ctx.reply("Welcome to XYZ Mini Web App", keyboard);
+  ctx.reply("Launch Temp Wallet Here", keyboard);
+});
+
+// Handler for any text except /start
+bot.on('text', (ctx: any) => {
+  if (ctx.message.text !== '/start') {
+    ctx.reply(`Hello! I'm the TrailLink bot. You said: ${ctx.message.text}. To login via temp wallet, just type '/start'`);
+  }
 });
 
 // Launch the bot
@@ -94,7 +101,7 @@ const generateTelegramHash = (data: any) => {
       if (value) acc[key] = value;
       return acc;
     },
-    {} as { [key: string]: any }
+    {}
   );
 
   // Sort the entries and create the data check string
