@@ -32,8 +32,8 @@ export default function RootLayout({
     <html lang="en">
       <DynamicContextProvider
         settings={{
-          environmentId: dynamicEnvId,
-          walletConnectors: [EthereumWalletConnectors, SolanaWalletConnectors],
+          environmentId: "cc235757-a0ca-4927-a817-297702866bf8",
+          walletConnectors: [EthereumWalletConnectors],
           walletConnectorExtensions: [GlobalWalletExtension]
         }}
       >
