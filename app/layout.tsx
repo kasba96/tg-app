@@ -6,6 +6,7 @@ import {
   EthereumWalletConnectors,
   SolanaWalletConnectors,
 } from "../lib/dynamic";
+import { ZeroDevSmartWalletConnectors } from "@dynamic-labs/ethereum-aa";
 
 import { GlobalWalletExtension } from "@dynamic-labs/global-wallet";
 
@@ -33,7 +34,8 @@ export default function RootLayout({
       <DynamicContextProvider
         settings={{
           environmentId: "cc235757-a0ca-4927-a817-297702866bf8",
-          walletConnectors: [EthereumWalletConnectors],
+          //@ts-ignore
+          walletConnectors: [EthereumWalletConnectors, ZeroDevSmartWalletConnectors],
           walletConnectorExtensions: [GlobalWalletExtension]
         }}
       >

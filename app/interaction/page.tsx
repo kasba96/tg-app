@@ -2,14 +2,59 @@
 import { useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
-import { DynamicWidget } from "../../lib/dynamic"; // Import the DynamicWidget
+import { DynamicWidget } from "../../lib/dynamic";
+import { useDynamicContext } from '@dynamic-labs/sdk-react-core';
+import { encodeFunctionData } from 'viem'; // Use viem to encode the function data
+import abi from "../abi/nft.json";
 
 export default function Interaction() {
   const [minted, setMinted] = useState(false);
+  const { primaryWallet } = useDynamicContext();
 
-  const handleMint = () => {
-    // Simulate NFT minting
-    setMinted(true);
+  const handleMint = async () => {
+    //@ts-ignore
+    const publicClient = await primaryWallet?.getPublicClient();
+    //@ts-ignore
+    const walletClient = await primaryWallet?.getWalletClient();
+
+    // Address of the contract
+    const contractAddress = "0x66D45d170a80FD2628F262EEfEFD79BDEF0c8699";
+
+    // Define the function you want to call and its parameters
+    const functionName = "mintNFT";
+    const recipientAddress = primaryWallet?.address; // Mint for the connected wallet
+
+    // Encode the function call using the ABI and function parameters
+    const data = encodeFunctionData({
+      abi: abi,
+      functionName: functionName,
+      args: [recipientAddress],
+    });
+
+    // Construct the transaction object
+    const transaction = {
+      to: contractAddress,
+      data: data,
+      value: "0", // No Ether is sent with this transaction
+    };
+
+    // Send the transaction
+    try {
+      const hash = await walletClient.sendTransaction(transaction);
+      console.log({ hash });
+      
+      const receipt = await publicClient.waitForTransactionReceipt({
+        hash,
+      });
+
+      console.log(receipt);
+
+      if (receipt) {
+        setMinted(true);  // Update the UI if the mint is successful
+      }
+    } catch (error) {
+      console.error("Error during transaction:", error);
+    }
   };
 
   return (
