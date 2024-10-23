@@ -54,6 +54,12 @@ Trail Link is a blockchain-powered event management app built on the Polygon tes
 
    Your app should now be running on [http://localhost:3000](http://localhost:3000).
 
+5. Run the mini app:
+
+   ```
+   npx ts-node scripts/bot.ts
+   ```
+
 ### Deployed Version
 
 The app is deployed on the Polygon testnet. You can interact with the live version of the Trail Link app through the Telegram bot.
